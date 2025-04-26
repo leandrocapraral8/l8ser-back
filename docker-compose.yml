@@ -1,0 +1,42 @@
+volumes:
+  dev_pgdata:
+    name: dev_pgdata
+
+services:
+  l8ser-db:
+    image: postgres:10
+    container_name: l8ser-db
+    hostname: l8ser-db
+    ports:
+      - 5436:5432
+    tty: true
+    env_file:
+      - .env
+    volumes:
+      - dev_pgdata:/var/lib/postgresql/data
+    restart: always
+    healthcheck:
+      test: psql --dbname=postgres --username=postgres --no-password -c 'select 1;'
+      interval: 5s
+      timeout: 5s
+      retries: 3
+
+  l8ser-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: l8ser-api:1.0.0
+    container_name: l8ser-api
+    hostname: l8ser-api
+    restart: always
+    ports:
+      - 8006:8000
+    tty: true
+    env_file:
+      - .env
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./code/:/app
+    depends_on:
+      l8ser-db:
+        condition: service_healthy
