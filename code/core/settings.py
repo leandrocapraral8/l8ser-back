@@ -53,10 +53,10 @@ INSTALLED_APPS = [
     'phonenumber_field',
 
     #apps
-    'users',
     'customer',
     'product',
-    'report'
+    'report',
+    'users',
 ]
 
 MIDDLEWARE = [

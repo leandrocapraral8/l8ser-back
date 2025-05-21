@@ -23,6 +23,9 @@ begin: migrate fixtures start
 start:
 	@docker-compose up
 
+start_db:
+	@docker-compose up l8ser-db
+
 stop:
 	@docker-compose stop
 

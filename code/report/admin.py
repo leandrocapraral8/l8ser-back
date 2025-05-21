@@ -4,7 +4,7 @@ from .utils import fetch_tickets, gerar_resumo_freshdesk, fetch_checkpoint_info
 
 @admin.register(Report)
 class ReportAdmin(admin.ModelAdmin):
-    list_display = ('customer', 'month', 'user')
+    list_display = ('customer', 'month_and_year', 'user')
     actions = ['gerar_resumo_freshdesk_action', 'gerar_resumo_checkpoint_action']
 
     def gerar_resumo_freshdesk_action(self, request, queryset):

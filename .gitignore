@@ -22,6 +22,4 @@ venv.bak/
 __pycache__/
 *__.py
 media/
-**/migrations/**
-!**/migrations
-**/migrations/__init__.py
+!**/migrations/**

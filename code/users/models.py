@@ -24,6 +24,7 @@ class UserManager(BaseUserManager):
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
+        user.username = email
         user.save()
         return user
 
@@ -43,7 +44,6 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractUser):
-    username = None
     email = models.EmailField(_('email address'), unique=True, blank=True)
     no_expiry_token = models.BooleanField(default=False)
     phone = PhoneNumberField(region="BR", blank=True, null=True)

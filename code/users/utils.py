@@ -31,6 +31,7 @@ def fetch_users():
                         first_name=first_name,
                         last_name=last_name,
                         email=user.get('contact', {}).get('email', ''),
+                        username=user.get('contact', {}).get('email', ''),
                         freshdesk_id=user.get('id'),
                         user_type='collaborator'
                     )

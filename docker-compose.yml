@@ -4,7 +4,7 @@ volumes:
 
 services:
   l8ser-db:
-    image: postgres:10
+    image: postgres:14
     container_name: l8ser-db
     hostname: l8ser-db
     ports:
