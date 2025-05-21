@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
+from customer.models import Customer
 
 USERTYPE_CHOICES = [
     ("contact", "Contact"),
@@ -49,7 +50,7 @@ class User(AbstractUser):
     phone = PhoneNumberField(region="BR", blank=True, null=True)
     freshdesk_id = models.CharField(max_length=255, null=True, blank=True)
     user_type = models.CharField(max_length=255, choices=USERTYPE_CHOICES, default="collaborator")
-
+    customer = models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

@@ -6,13 +6,27 @@ from .utils import fetch_users
 from django.shortcuts import redirect
 from django.utils.html import format_html
 
-@admin.register(User)
+# @admin.register(User)
 class CustomUserAdmin(UserAdmin):
     model = User
-    list_display = ('email', 'first_name', 'last_name', 'is_active', 'is_staff')
-    list_filter = ('is_active', 'is_staff')
+    list_display = ('email', 'first_name', 'last_name', 'is_active', 'is_staff', 'customer')
+    list_filter = ('is_active', 'is_staff', 'customer')
     search_fields = ('email',)
     ordering = ('email',)
+    fieldsets = (
+        (None, {'fields': ('password',)}),
+        ('Personal info', {'fields': ('first_name', 'last_name', 'email')}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
+        ('Important dates', {'fields': ('last_login', 'date_joined')}),
+        ('Customer', {'fields': ('customer',)}),
+        ('Freshdesk info', {'fields': ('freshdesk_id',)}),
+    )
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('password1', 'password2', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'is_superuser'),
+        }),
+    )
 
     def get_urls(self):
         urls = super().get_urls()
@@ -35,3 +49,5 @@ class CustomUserAdmin(UserAdmin):
     fetch_and_create_users_button.allow_tags = True
 
     change_list_template = 'users/change_list_with_button.html'
+
+admin.site.register(User, CustomUserAdmin)

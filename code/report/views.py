@@ -17,6 +17,11 @@ class ReportViewSet(viewsets.ModelViewSet):
     filter_fields = ()
     ordering_fields = ("__all__")
 
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return Report.objects.all()
+        return Report.objects.filter(customer=self.request.user.customer)
+
 # class GenerateReportView(APIView):
 #     def get(self, request, format=None):
 #         report_id = request.query_params.get('report_id')
