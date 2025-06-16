@@ -43,20 +43,20 @@ class ReportAdmin(admin.ModelAdmin):
 
     def gerar_resumo_checkpoint_action(self, request, queryset):
         if queryset.count() > 1:
-            self.message_user(request, "Por favor, selecione apenas um relatório por vez.", level='error')
+            self.message_user(request, "Por favor, selecione apenas um relatorio por vez.", level='error')
             return
 
         report_id = queryset.first().id
-        date = queryset.first().month
+        date = queryset.first().month_and_year
 
         if not report_id or not date:
-            self.message_user(request, "Report ID ou data não fornecidos.", level='error')
+            self.message_user(request, "Report ID ou data nao fornecidos.", level='error')
             return
 
         try:
             report = Report.objects.get(id=report_id)
         except Report.DoesNotExist:
-            self.message_user(request, "Report não encontrado.", level='error')
+            self.message_user(request, "Report nao encontrado.", level='error')
             return
         except Exception as e:
             self.message_user(request, f"Erro inesperado ao buscar o Report: {str(e)}", level='error')

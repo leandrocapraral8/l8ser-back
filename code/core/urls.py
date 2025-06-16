@@ -8,6 +8,7 @@ from users.urls import users_router
 from customer.urls import customers_router
 from product.urls import products_router, productcategories_router
 from report.urls import reports_router
+from communication.urls import communications_router
 
 router = routers.DefaultRouter()
 #Users
@@ -22,6 +23,9 @@ router.registry.extend(productcategories_router.registry)
 
 #Reports
 router.registry.extend(reports_router.registry)
+
+#Communications
+router.registry.extend(communications_router.registry)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
